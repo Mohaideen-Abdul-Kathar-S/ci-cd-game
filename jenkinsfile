@@ -1,9 +1,6 @@
+
 pipeline {
     agent any
-
-    parameters {
-        booleanParam(name: 'DESTROY', defaultValue: false, description: 'Destroy Infrastructure')
-    }
 
     environment {
         KEY_PATH = "/var/lib/jenkins/jenkinskkp.pem"
@@ -26,7 +23,6 @@ pipeline {
         }
 
         stage('Terraform Apply') {
-            when { expression { params.DESTROY == false } }
             steps {
                 dir('terraform') {
                     sh 'terraform apply -auto-approve'
@@ -35,31 +31,26 @@ pipeline {
         }
 
         stage('Get Public IP') {
-            when { expression { params.DESTROY == false } }
             steps {
                 script {
                     env.SERVER_IP = sh(
                         script: "cd terraform && terraform output -raw public_ip",
                         returnStdout: true
                     ).trim()
+
+                    echo "Server IP: ${SERVER_IP}"
                 }
             }
         }
 
-        stage('Wait for EC2 SSH') {
-            when { expression { params.DESTROY == false } }
+        stage('Wait for EC2') {
             steps {
-                sh '''
-                while ! nc -z ${SERVER_IP} 22; do
-                  echo "Waiting for SSH..."
-                  sleep 10
-                done
-                '''
+                echo "Waiting for EC2 to initialize..."
+                sh 'sleep 60'
             }
         }
 
         stage('Install Nginx') {
-            when { expression { params.DESTROY == false } }
             steps {
                 sh """
                 ssh -i ${KEY_PATH} -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} \
@@ -69,29 +60,32 @@ pipeline {
         }
 
         stage('Deploy Website') {
-            when { expression { params.DESTROY == false } }
             steps {
+
                 sh """
+                echo "Copying website files..."
                 scp -i ${KEY_PATH} -o StrictHostKeyChecking=no website/* \
                 ubuntu@${SERVER_IP}:/tmp/
                 """
 
                 sh """
+                echo "Replacing default nginx page..."
                 ssh -i ${KEY_PATH} -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} "
-                sudo rm -rf /var/www/html/* &&
-                sudo mv /tmp/* /var/www/html/ &&
-                sudo systemctl restart nginx"
+                sudo rm -f /var/www/html/index.nginx-debian.html &&
+                sudo rm -f /var/www/html/index.html &&
+                sudo mv /tmp/* /var/www/html/"
                 """
             }
         }
+    }
 
-        stage('Terraform Destroy') {
-            when { expression { params.DESTROY == true } }
-            steps {
-                dir('terraform') {
-                    sh 'terraform destroy -auto-approve'
-                }
-            }
+    post {
+        success {
+            echo "🎉 Deployment Successful!"
+            echo "Open in browser: http://${SERVER_IP}"
+        }
+        failure {
+            echo "❌ Deployment Failed. Check logs."
         }
     }
 }
