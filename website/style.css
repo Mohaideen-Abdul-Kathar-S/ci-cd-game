@@ -1,3 +1,4 @@
+/* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -5,60 +6,132 @@
     font-family: Arial, sans-serif;
 }
 
-body {
-    background: linear-gradient(to right, #4facfe, #00f2fe);
-    min-height: 100vh;
+/* Header */
+header {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background: #1e293b;
+    color: white;
+}
+
+header .logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #38bdf8;
+}
+
+/* Hero Section */
+.hero {
+    height: 90vh;
+    background: linear-gradient(to right, #0f172a, #1e3a8a);
+    color: white;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.container {
-    background: white;
-    padding: 25px;
-    width: 400px;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-h1 {
     text-align: center;
-    margin-bottom: 10px;
-    color: #333;
 }
 
-p {
-    text-align: center;
+.hero h1 {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 20px;
     margin-bottom: 20px;
-    color: #555;
 }
 
-label {
+.btn {
+    padding: 10px 20px;
+    background: #38bdf8;
+    color: black;
+    text-decoration: none;
+    border-radius: 5px;
     font-weight: bold;
-    margin-top: 10px;
-    display: block;
 }
 
-input, select, textarea {
-    width: 100%;
+.btn:hover {
+    background: white;
+}
+
+/* Sections */
+.section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.section h2 {
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+/* Events */
+.event-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.event-card {
+    background: #f1f5f9;
+    padding: 20px;
+    width: 250px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Form */
+.form {
+    max-width: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.form input,
+.form select {
     padding: 10px;
-    margin-top: 5px;
+    margin: 10px 0;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
 
-button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 20px;
-    background: #4facfe;
+.form button {
+    padding: 10px;
+    background: #1e3a8a;
     color: white;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
     cursor: pointer;
 }
 
-button:hover {
-    background: #00c6fb;
+.form button:hover {
+    background: #0f172a;
+}
+
+/* Footer */
+footer {
+    background: #1e293b;
+    color: white;
+    text-align: center;
+    padding: 15px;
 }
