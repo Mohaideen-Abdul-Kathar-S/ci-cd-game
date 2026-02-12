@@ -1,15 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Stone Paper Scissors</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Public Complaint Portal</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1> Stone Paper  Scissors</h1>
-  <button onclick="play('stone')">Stone</button>
-  <button onclick="play('paper')">Paper</button>
-  <button onclick="play('scissors')">Scissors</button>
-  <h2 id="result"></h2>
-  <script src="script.js"></script>
+
+    <div class="container">
+        <h1>Public Complaint Portal</h1>
+        <p>Raise complaints related to Electricity, Building, Plumbing, etc.</p>
+
+        <form>
+            <label>Name</label>
+            <input type="text" placeholder="Enter your name" required>
+
+            <label>Email</label>
+            <input type="email" placeholder="Enter your email" required>
+
+            <label>Complaint Type</label>
+            <select required>
+                <option value="">-- Select Complaint --</option>
+                <option>Electricity Issue</option>
+                <option>Building Defect</option>
+                <option>Plumbing / Pumping Fault</option>
+                <option>Road Damage</option>
+                <option>Water Supply Issue</option>
+            </select>
+
+            <label>Location</label>
+            <input type="text" placeholder="Enter location / address" required>
+
+            <label>Complaint Description</label>
+            <textarea rows="5" placeholder="Describe your complaint..." required></textarea>
+
+            <button type="submit">Submit Complaint</button>
+        </form>
+    </div>
+
 </body>
 </html>
