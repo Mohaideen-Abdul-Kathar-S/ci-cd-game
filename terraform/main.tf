@@ -1,9 +1,9 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "ap-south-1"
 }
 
 resource "aws_instance" "game_server" {
-  ami           = "ami-0b6c6ebed2801a5cb" 
+  ami           = "ami-019715e0d74f695be" 
   instance_type = "t3.small"
   key_name      = "dev"
 
