@@ -5,9 +5,9 @@ provider "aws" {
 resource "aws_instance" "game_server" {
   ami           = "ami-019715e0d74f695be" 
   instance_type = "t3.small"
-  key_name      = "dev"
+  key_name      = "asd"
 
-  security_groups = [aws_security_group.mygame1.name]
+  security_groups = [aws_security_group.mygame123.name]
 
   user_data = <<-EOF
               #!/bin/bash
@@ -22,8 +22,8 @@ resource "aws_instance" "game_server" {
   }
 }
 
-resource "aws_security_group" "mygame1" {
-  name = "mygame1"
+resource "aws_security_group" "mygame123" {
+  name = "mygame123"
 
   ingress {
     from_port   = 22
